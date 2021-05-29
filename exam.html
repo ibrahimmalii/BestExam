@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exam</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+        
+        body {
+            background-color: #c5d7da;
+        }
+        
+        #container {
+            text-align: center;
+            height: 50px;
+            background-color: #e6e6e6;
+        }
+        
+        h1 {
+            font-family: serif;
+            text-align: center;
+            font-size: 50px;
+            font-weight: bold;
+            color: white;
+            margin-top: 0;
+        }
+        
+        h2 {
+            text-align: center;
+            margin: 0 auto;
+            display: none;
+        }
+        
+        #username,
+        #examname,
+        #examtime {
+            display: inline-block;
+            width: 350px;
+            height: 50px;
+            /* border: 1px solid black; */
+            background-color: #e6e6e6;
+            font-size: 30px;
+            line-height: 50px;
+            color: #ff002e;
+        }
+        
+        #username {
+            float: left;
+        }
+        
+        #examname h2 {
+            line-height: 100px;
+        }
+        
+        #examtime {
+            float: right;
+        }
+        
+        #containertwo {
+            width: 100%;
+            height: 550px;
+            margin: 10px auto;
+        }
+        
+        #question {
+            width: 70%;
+            height: 450px;
+            border: 3px solid #d0caca;
+            margin: 20px auto;
+            padding: 30px 20px;
+            font-size: 34px;
+            border-radius: 36px;
+            color: white;
+            background: #d40d34;
+            box-shadow: 3px 3px 3px;
+        }
+        
+        input[type=radio] {
+            margin: 30px;
+            height: 22px;
+            width: 30px;
+        }
+        
+        #next {
+            float: right;
+            width: 223px;
+            height: 44px;
+            border-radius: 20px;
+            margin-right: 220px;
+            font-size: 31px;
+            color: white;
+            background-color: #d40d34;
+            cursor: pointer;
+            box-shadow: 3px 3px 3px;
+        }
+    </style>
+    <!-- <script src="jquery.js"></script> -->
+    <script>
+        window.addEventListener('load', function() {
+
+                window.oncontextmenu = function(e) {
+                        if (e.which = 3) {
+                            alert('please do not repeat this again')
+                            return false;
+                        }
+                    } // to stop right click and oncontextmenu
+
+                // var stop = (function() {
+                //         window.stop()
+                //     }()) // to stop reload page 
+
+                //get information
+                name = location.href.substring(location.href.lastIndexOf("?") + 1);
+
+                //registier elements
+                username = document.getElementById('username');
+                examname = document.getElementById('examname');
+                examtime = document.getElementById('examtime');
+                questiondiv = document.getElementById('question');
+                countel = document.getElementById('countel');
+                errorr = document.getElementById('error');
+
+                if (JSON.parse(localStorage.getItem(name)).gender == "male") {
+                    questiondiv.style.backgroundColor = "#42a3b3";
+                    questiondiv.style.color = "black";
+                    next.style.backgroundColor = "#42a3b3"
+                    next.style.color = "black";
+                }
+
+                next = document.getElementById('next');
+                // questionarr = quiz.Questions;
+
+                examname.innerText = "MATH EXAM";
+                username.innerText = "Welcome : " + name;
+
+                //how to set countdown
+                starttimeminutes = 30;
+                time = starttimeminutes * 60;
+
+                var count = setInterval(function updatecountdown() {
+                    minutes = Math.floor(time / 60);
+                    seconds = time % 60;
+                    countel.innerHTML = minutes + " : " + seconds
+                    time--;
+                }, 1000);
+                setTimeout(function() {
+                        clearInterval(count);
+                        next.style.display = "none";
+                        countel.style.display = "none";
+                        questiondiv.innerHTML = "<p> Your result is : " + result + " degree";
+                    }, 1800000) // to shut down exam
+
+
+                quiz = {
+                        name: "MATH",
+                        QuizTime: "30 minutes",
+                        TotalDegree: 100,
+                        Questions: [{
+                            Header: "what is 2 * 5",
+                            Answers: ["2", "5", "10", "15", "20"],
+                            Correctanswer: "10",
+                            Degree: 10
+                        }, {
+                            Header: "what is 3 * 15",
+                            Answers: ["3", "6", "45", "12", "18"],
+                            Correctanswer: "45",
+                            Degree: 10
+                        }, {
+                            Header: "what is 3 * 7",
+                            Answers: ["3", "21", "9", "12", "18"],
+                            Correctanswer: "21",
+                            Degree: 10
+                        }, {
+                            Header: "what is 2 * 30",
+                            Answers: ["3", "6", "60", "12", "18"],
+                            Correctanswer: "60",
+                            Degree: 10
+                        }, {
+                            Header: "what is 3 * 3",
+                            Answers: ["3", "6", "9", "12", "18"],
+                            Correctanswer: "9",
+                            Degree: 10
+                        }, {
+                            Header: "what is 3 * 9",
+                            Answers: ["3", "27", "9", "12", "18"],
+                            Correctanswer: "27",
+                            Degree: 10
+                        }, {
+                            Header: "what is 3 * 40",
+                            Answers: ["15", "60", "9", "120", "18"],
+                            Correctanswer: "120",
+                            Degree: 10
+                        }, {
+                            Header: "what is 3 * 10",
+                            Answers: ["3", "6", "9", "30", "18"],
+                            Correctanswer: "30",
+                            Degree: 10
+                        }, {
+                            Header: "what is 4 * 5",
+                            Answers: ["3", "6", "20", "12", "18"],
+                            Correctanswer: "20",
+                            Degree: 10
+                        }, {
+                            Header: "what is 3 * 11",
+                            Answers: ["3", "6", "33", "12", "18"],
+                            Correctanswer: "33",
+                            Degree: 10
+                        }]
+
+                    } // End of quiz object
+
+
+                var i = 0;
+                var result = 0;
+                question = document.createElement('h1');
+                question.innerText = "(" + (i + 1) + ") " + quiz.Questions[i].Header + " ?";
+
+                first = document.createElement('input');
+                first.setAttribute("type", "radio");
+                first.setAttribute("name", "answer");
+                first.setAttribute("value", quiz.Questions[i].Answers[0])
+                firstspan = document.createElement('span');
+                firstspan.innerHTML = quiz.Questions[i].Answers[0] + "<br>";
+
+                second = document.createElement('input');
+                second.setAttribute("type", "radio");
+                second.setAttribute("name", "answer");
+                second.setAttribute("value", quiz.Questions[i].Answers[1])
+                secondspan = document.createElement('span');
+                secondspan.innerHTML = quiz.Questions[i].Answers[1] + "<br>";
+
+                third = document.createElement('input');
+                third.setAttribute("type", "radio");
+                third.setAttribute("name", "answer");
+                third.setAttribute("value", quiz.Questions[i].Answers[2])
+                thirdspan = document.createElement('span');
+                thirdspan.innerHTML = quiz.Questions[i].Answers[2] + "<br>";
+
+                fourth = document.createElement('input');
+                fourth.setAttribute("type", "radio");
+                fourth.setAttribute("name", "answer");
+                fourth.setAttribute("value", quiz.Questions[i].Answers[3])
+                fourthspan = document.createElement('span');
+                fourthspan.innerHTML = quiz.Questions[i].Answers[3] + "<br>";
+
+                fifth = document.createElement('input');
+                fifth.setAttribute("type", "radio");
+                fifth.setAttribute("name", "answer");
+                fifth.setAttribute("value", quiz.Questions[i].Answers[4])
+                fifthspan = document.createElement('span');
+                fifthspan.innerHTML = quiz.Questions[i].Answers[4] + "<br>";
+
+                ouranswer = document.getElementsByName("answer");
+
+                questiondiv.appendChild(question);
+                questiondiv.appendChild(first);
+                questiondiv.appendChild(firstspan);
+                questiondiv.appendChild(second);
+                questiondiv.appendChild(secondspan);
+                questiondiv.appendChild(third);
+                questiondiv.appendChild(thirdspan);
+                questiondiv.appendChild(fourth);
+                questiondiv.appendChild(fourthspan);
+                questiondiv.appendChild(fifth);
+                questiondiv.appendChild(fifthspan);
+
+
+                next.addEventListener('click', function() {
+
+                        for (var a = 0; a < ouranswer.length; a++) {
+                            if (ouranswer[a].checked) {
+                                success = ouranswer[a].value;
+                                console.log(success)
+                                if (success == quiz.Questions[i].Correctanswer) {
+                                    result += 10;
+                                    console.log(result);
+                                }
+                            } //End of check answer
+
+                            if (ouranswer[a].checked == true && i < quiz.Questions.length - 1) {
+                                i++;
+                                ouranswer[a].checked = false;
+                                //header
+                                question.innerText = "(" + (i + 1) + ") " + quiz.Questions[i].Header + " ?";
+                                //radio
+                                first.setAttribute("value", quiz.Questions[i].Answers[0]);
+                                second.setAttribute("value", quiz.Questions[i].Answers[1]);
+                                third.setAttribute("value", quiz.Questions[i].Answers[2]);
+                                fourth.setAttribute("value", quiz.Questions[i].Answers[3]);
+                                fifth.setAttribute("value", quiz.Questions[i].Answers[4]);
+                                //spans
+                                firstspan.innerHTML = quiz.Questions[i].Answers[0] + "<br>";
+                                secondspan.innerHTML = quiz.Questions[i].Answers[1] + "<br>";
+                                thirdspan.innerHTML = quiz.Questions[i].Answers[2] + "<br>";
+                                fourthspan.innerHTML = quiz.Questions[i].Answers[3] + "<br>";
+                                fifthspan.innerHTML = quiz.Questions[i].Answers[4] + "<br>";
+
+
+                                if (i >= quiz.Questions.length - 1) {
+                                    next.setAttribute("value", "finish");
+                                    next.addEventListener('click', function() {
+                                        clearInterval(count);
+                                        next.style.display = "none";
+                                        countel.style.display = "none";
+                                        score = JSON.parse(localStorage.getItem(name));
+                                        score.degree = JSON.parse(localStorage.getItem(name)).degree;
+                                        score.degree += Number(result);
+                                        localStorage.setItem(name, JSON.stringify(score))
+                                        currentdegree = JSON.parse(localStorage.getItem(name)).degree;
+                                        questiondiv.innerHTML = "<p> Your Summition is : " + currentdegree + " degree";
+                                    })
+
+                                }
+
+                            } else {} //End of check choose
+                        }
+                    }) //End of click event
+
+
+            }) //End of load page
+    </script>
+</head>
+
+<body>
+    <div id="container">
+        <div id="username"></div>
+        <div id="examname"></div>
+        <div id="examtime">
+            <p id="countel"> 30:00 </p>
+        </div>
+    </div>
+    <div id="containertwo">
+        <h1>Choose the correct Answer</h1>
+        <h2 id="error">you need to choose first</h2>
+        <div id="question"></div>
+        <input type="button" id="next" value="NEXT">
+    </div>
+
+
+</body>
+
+</html>

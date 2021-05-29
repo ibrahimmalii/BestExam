@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign in</title>
+    <style>
+        form {
+            margin: 20px 10px;
+        }
+        
+        table {
+            width: 500px;
+            height: 200px;
+            margin-left: 500px;
+            padding-left: 20px;
+            border: 1px solid black;
+            background-color: #423729;
+            border-radius: 20px;
+        }
+        
+        lable {
+            font-size: 21px;
+            font-family: revert;
+            font-weight: bold;
+            letter-spacing: 1px;
+            color: blanchedalmond;
+        }
+        
+        input[type=text],
+        input[type=password] {
+            width: 318px;
+            outline: none;
+            border: none;
+            color: darkblue;
+            height: 24px;
+            text-indent: 10px;
+            border-radius: 4px;
+        }
+        
+        input[type=submit],
+        input[type=reset] {
+            width: 86px;
+            margin-right: 74px;
+            margin-left: 74px;
+            height: 39px;
+            font-size: 18px;
+            background-color: black;
+            border: none;
+            color: chartreuse;
+            border-radius: 17px;
+        }
+        
+        span {
+            color: red;
+            display: none;
+        }
+        
+        .wrong {
+            border: 2px solid red;
+        }
+        
+        .success {
+            border: 2px solid green;
+        }
+    </style>
+    <script>
+        window.addEventListener('load', function() {
+
+
+            //correct values
+            // correctuser = location.href.substring(location.href.lastIndexOf("?") + 1).split("&")[0].split("=")[1];
+            // correctpass = location.href.substring(location.href.lastIndexOf("?") + 1).split("&")[1].split("=")[1];
+
+            //registier elements
+            username = document.getElementById('username');
+            username.select();
+            userpass = document.getElementById('userpass');
+            usererror = document.getElementById('usererror');
+            passerror = document.getElementById('passerror');
+            error = document.getElementById('error');
+            arrinput = document.getElementsByTagName("input");
+            arrspan = document.getElementsByTagName("span");
+            submit = document.getElementById('submit');
+
+
+
+            username.addEventListener('blur', function() {
+                    if (username.value == 0) {
+                        username.select();
+                        username.focus();
+                        usererror.style.display = "block";
+                        username.className = "wrong";
+                    } else {
+                        usererror.style.display = "none";
+                        username.className = "success";
+                        userpass.select();
+                    }
+                }) //End of username check
+            userpass.addEventListener('blur', function() {
+                    if (userpass.value == 0) {
+                        // userpass.select();
+                        // userpass.focus();
+                        passerror.style.display = "block";
+                        userpass.className = "wrong"
+                    } else {
+                        passerror.style.display = "none";
+                        submit.select();
+                    }
+                }) //End of userpass check
+
+
+
+            document.forms[0].addEventListener('submit', function(s) {
+
+
+                if (username.value == "" || userpass.value == "" || localStorage.getItem(username.value) == null) {
+                    s.preventDefault();
+                    alert("please check again")
+                }
+                password = JSON.parse(localStorage.getItem(username.value)).userpass;
+                if (localStorage.getItem(username.value) != null && userpass.value == password) {
+                    window.location = "./exam.html?" + username.value;
+                    for (var i = 0; i < arrspan.length; i++) {
+                        arrspan[i].style.display = "none";
+                    }
+                }
+            })
+
+            document.forms[0].addEventListener('reset', function(s) {
+                if (!confirm("Are you sure about this?")) {
+                    s.preventDefault();
+                } else {
+                    for (var i = 0; i < arrspan.length; i++) {
+                        arrspan[i].style.display = "none";
+                    }
+                    for (var i = 0; i < arrspan.length; i++) {
+                        arrinput[i].removeAttribute("class");
+                    }
+                };
+            })
+        })
+    </script>
+</head>
+
+<body>
+    <form method="POST" target="_blank" action="exam.html">
+        <table>
+            <tr>
+                <td>
+                    <lable>User Name</lable>
+                </td>
+                <td>
+                    <input type="text" name="username" id="username" placeholder="Enter your name">
+                    <br>
+                    <span id="usererror">you need to write this first</span>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <lable>Password</lable>
+                </td>
+                <td>
+                    <input type="password" name="userpass" id="userpass" placeholder="Enter your password">
+                    <br>
+                    <span id="passerror">you need to fill this first</span>
+                    <span id="error">please check your username and password to continue</span>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <input type="submit" value="OK" id="submit">
+                    <input type="reset" value="Cancel" id="cancel">
+                </td>
+            </tr>
+        </table>
+    </form>
+</body>
+
+</html>
